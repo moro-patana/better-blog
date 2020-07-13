@@ -13,12 +13,8 @@ const hideButton = document.querySelector(`#show-form`);
 const errorMsg = document.querySelector(`#error-message`);
 
 
-
-// const image = document.getElementsByClassName(`card-img-top`);
-// const newHeading = document.querySelector(`.card-title`);
-// const newParagraph = document.querySelector(`.card-text`);
-// const deleteButton = document.querySelector(`.btn-delete`);
-// const cardFooter = document.querySelector(`text-muted`);
+const today =  new Date();
+const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
 // Add eventListener to the submit button
 
@@ -32,7 +28,7 @@ const myHtml = `
         <p class="card-text">${textarea.value}</p>
         <button type="button" class="btn btn-sm btn-light btn-delete">Delete entry</button>
       </div>
-      <div class="card-footer text-muted></div>
+      <div class="card-footer text-muted">${today}</div>
     </div>`;
 
 newPost.insertAdjacentHTML(`afterbegin`, myHtml)
