@@ -10,6 +10,7 @@ const submitButton = document.querySelector('.btn-primary');
 const textarea = document.querySelector(`.form-control[name="postContent"]`);
 const form = document.querySelector(`#post-form`);
 const hideButton = document.querySelector(`#show-form`);
+const errorMsg = document.querySelector(`#error-message`);
 
 
 
@@ -27,7 +28,7 @@ const myHtml = `
     <div class="card">
       <img class="card-img-top" src="${sourceInput.value}" alt="Card image cap">
       <div class="card-body">
-        <h5 class="card-title">${titleInput.value} by ${authorInput.value}</h5>
+        <h5 class="card-title">${titleInput.value} <small>by ${authorInput.value}</small></h5>
         <p class="card-text">${textarea.value}</p>
         <button type="button" class="btn btn-sm btn-light btn-delete">Delete entry</button>
       </div>
@@ -38,6 +39,19 @@ newPost.insertAdjacentHTML(`afterbegin`, myHtml)
 
      form.reset();
   });
+
+  textarea.addEventListener(`blur`, ($event) => {
+    if (textarea.value > 20) {
+      textarea.style.border = `thin solid green`;
+      errorMsg.style.display = `none`;
+    } else {
+      textarea.style.border = `thin solid red`;
+   errorMsg.style.display = `block`;
+    }
+  });
+  
+  
+
   hideButton.addEventListener('click', (event) => {
     if (form.classList.contains("hidden")!== true) {
         form.classList.add('hidden');
