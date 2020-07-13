@@ -11,10 +11,24 @@ const textarea = document.querySelector(`.form-control[name="postContent"]`);
 const form = document.querySelector(`#post-form`);
 const hideButton = document.querySelector(`#show-form`);
 const errorMsg = document.querySelector(`#error-message`);
+const deleteButton = document.querySelector(`btn-delete`);
 
+// Set a date
 
 const today =  new Date();
-const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+// Hide and show form
+
+hideButton.addEventListener('click', (event) => {
+  if (form.classList.contains("hidden")!== true) {
+      form.classList.add('hidden');
+      hideButton.textContent = "Add a post";
+  } else {
+      form.classList.remove('hidden');
+      hideButton.textContent = "Hide form";
+  };
+});
+
 
 // Add eventListener to the submit button
 
@@ -28,38 +42,32 @@ const myHtml = `
         <p class="card-text">${textarea.value}</p>
         <button type="button" class="btn btn-sm btn-light btn-delete">Delete entry</button>
       </div>
-      <div class="card-footer text-muted">${today}</div>
+      <div class="card-footer text-muted">${today.toLocaleDateString()}</div>
     </div>`;
 
 newPost.insertAdjacentHTML(`afterbegin`, myHtml)
 
+// Number of the words user should enter
+
+const numberOfWords = textarea.value.split(" ").length;
+    if(numberOfWords < 20){ 
+      textarea.classList.add(`is-invalid`);
+      errorMsg.classList.remove(`hidden`);
+
+    } else {
+      textarea.classList.remove(`is-invalid`);
+      textarea.style.border = `thin solid green`;
+      errorMsg.classList.add(`hidden`);
+    }
+
+
      form.reset();
   });
 
-  textarea.addEventListener(`blur`, ($event) => {
-    if (textarea.value > 20) {
-      textarea.style.border = `thin solid green`;
-      errorMsg.style.display = `none`;
-    } else {
-      textarea.style.border = `thin solid red`;
-   errorMsg.style.display = `block`;
-    }
-  });
-  
-  
 
-  hideButton.addEventListener('click', (event) => {
-    if (form.classList.contains("hidden")!== true) {
-        form.classList.add('hidden');
-        hideButton.textContent = "Add a post";
-    } else {
-        form.classList.remove('hidden');
-        hideButton.textContent = "Hide form";
-    };
-});
- 
-  // deleteButton.addEventListener(`click`, (event) => {
-  //   if (deleteButton.clicked === true) {
-
-  //   }
-  // })
+ const handleDelete = (event) => {
+   if (event.target.classList.contains(`btn-delete`)) {
+     deleteButton.closest(`.card`).remove();
+   }
+ }
+ document.addEventListener(`click`, handleDelete);
